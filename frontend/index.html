@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Store - Panel de Control</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <header class="app-header">
+            <div class="logo">
+                <i class="fa-solid fa-utensils"></i>
+                <h1>Food Store</h1>
+            </div>
+
+            <div class="header-controls">
+                <div class="user-selector-container">
+                    <label for="userSelect"><i class="fa-solid fa-user-circle"></i> Comprador:</label>
+                    <select id="userSelect">
+                    </select>
+                </div>
+            </div>
+        </header>
+
+        <main class="app-main">
+            <div id="clientPanel" class="role-panel active">
+                <div class="panel-layout">
+                    <section class="left-section">
+                        <div class="categories-bar-container">
+                            <h3>Categorías</h3>
+                            <div class="categories-tabs" id="categoriesTabs">
+                                <button class="tab-btn active" data-category-id="all">Todos</button>
+                            </div>
+                        </div>
+
+                        <div class="catalog-container">
+                            <div class="section-title">
+                                <h2>Menú Disponible</h2>
+                            </div>
+                            <div class="products-grid" id="productsGrid">
+                            </div>
+                        </div>
+
+                        <div class="history-container">
+                            <div class="section-title">
+                                <h2>Mis Pedidos Recientes</h2>
+                                <button id="refreshHistoryBtn" class="refresh-btn"><i class="fa-solid fa-rotate"></i>
+                                    Actualizar</button>
+                            </div>
+                            <div class="orders-list" id="ordersList">
+                            </div>
+                        </div>
+                    </section>
+
+                    <aside class="right-section">
+                        <div class="cart-card">
+                            <div class="cart-header">
+                                <h2><i class="fa-solid fa-cart-shopping"></i> Carrito</h2>
+                                <span class="badge" id="cartCount">0</span>
+                            </div>
+
+                            <div class="cart-items" id="cartItems">
+                                <div class="empty-cart">
+                                    <i class="fa-solid fa-basket-shopping"></i>
+                                    <p>El carrito está vacío</p>
+                                </div>
+                            </div>
+
+                            <div class="cart-summary">
+                                <div class="summary-row">
+                                    <span>Subtotal:</span>
+                                    <span id="cartSubtotal">$0.00</span>
+                                </div>
+
+                                <div class="payment-method-container">
+                                    <label for="paymentMethod"><i class="fa-solid fa-credit-card"></i> Método de
+                                        Pago:</label>
+                                    <select id="paymentMethod">
+                                        <option value="EFECTIVO">Efectivo</option>
+                                        <option value="TARJETA">Tarjeta de Crédito/Débito</option>
+                                        <option value="TRANSFERENCIA">Transferencia Bancaria</option>
+                                    </select>
+                                </div>
+
+                                <button id="checkoutBtn" class="checkout-btn" disabled>
+                                    Confirmar Pedido <i class="fa-solid fa-chevron-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+
+            <div id="adminPanel" class="role-panel hidden">
+                <div class="admin-layout">
+                    <div class="admin-forms-column">
+                        <div class="admin-card">
+                            <div class="card-header-simple">
+                                <h2><i class="fa-solid fa-folder-plus"></i> Nueva Categoría</h2>
+                            </div>
+                            <form id="createCategoryForm" class="admin-form">
+                                <div class="form-group">
+                                    <label for="catNombre">Nombre de Categoría</label>
+                                    <input type="text" id="catNombre" required placeholder="Ej: Postres">
+                                </div>
+                                <div class="form-group">
+                                    <label for="catDesc">Descripción</label>
+                                    <textarea id="catDesc" required
+                                        placeholder="Ej: Tortas, tartas y helados"></textarea>
+                                </div>
+                                <button type="submit" class="admin-submit-btn">Crear Categoría</button>
+                            </form>
+                        </div>
+
+                        <div class="admin-card">
+                            <div class="card-header-simple">
+                                <h2><i class="fa-solid fa-circle-plus"></i> Nuevo Producto</h2>
+                            </div>
+                            <form id="createProductForm" class="admin-form">
+                                <div class="form-group">
+                                    <label for="prodNombre">Nombre del Producto</label>
+                                    <input type="text" id="prodNombre" required placeholder="Ej: Tarta de Frutilla">
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="prodPrecio">Precio ($)</label>
+                                        <input type="number" id="prodPrecio" required min="0" step="0.01"
+                                            placeholder="Ej: 3500.00">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="prodStock">Stock Inicial</label>
+                                        <input type="number" id="prodStock" required min="0" placeholder="Ej: 15">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="prodCategoria">Categoría</label>
+                                    <select id="prodCategoria" required>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="prodDesc">Descripción</label>
+                                    <input type="text" id="prodDesc"
+                                        placeholder="Ej: Tarta con crema pastelera y frutillas frescas">
+                                </div>
+                                <div class="form-group">
+                                    <label for="prodImagen">Nombre archivo de Imagen</label>
+                                    <input type="text" id="prodImagen" placeholder="Ej: tarta_frutilla.png">
+                                </div>
+                                <button type="submit" class="admin-submit-btn">Crear Producto</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="admin-orders-column">
+                        <div class="admin-card full-height">
+                            <div class="section-title">
+                                <h2><i class="fa-solid fa-receipt"></i> Gestión General de Pedidos</h2>
+                                <button id="refreshAdminHistoryBtn" class="refresh-btn"><i
+                                        class="fa-solid fa-rotate"></i> Actualizar</button>
+                            </div>
+                            <div class="orders-list" id="adminOrdersList">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="toast" class="toast hidden"></div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
